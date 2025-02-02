@@ -8,7 +8,7 @@ set "version_url=%repo_url%/version.txt"
 :check_admin
 net session >nul 2>&1
 if %errorlevel% neq 0 (
-    echo ÇëÇó¹ÜÀíÔ±È¨ÏŞ...
+    echo è¯·æ±‚ç®¡ç†å‘˜æƒé™...
     powershell -Command "Start-Process '%~dpnx0' -Verb RunAs"
     exit
 )
@@ -16,14 +16,14 @@ if %errorlevel% neq 0 (
 :main_menu
 cls
 echo ==============================
-echo    USB¸ñÊ½»¯¹¤¾ß v%version%    
+echo    USBæ ¼å¼åŒ–å·¥å…· v%version%    
 echo ==============================
-echo 1. ¸ñÊ½»¯UÅÌ
-echo 2. ¼ì²é¸üĞÂ
-echo 3. ÍË³ö
+echo 1. æ ¼å¼åŒ–Uç›˜
+echo 2. æ£€æŸ¥æ›´æ–°
+echo 3. é€€å‡º
 echo ==============================
 
-choice /c 123 /n /m "ÇëÑ¡Ôñ²Ù×÷: "
+choice /c 123 /n /m "è¯·é€‰æ‹©æ“ä½œ: "
 goto option_%errorlevel%
 
 :option_1
@@ -39,34 +39,34 @@ exit
 
 :format_drive
 cls
-echo ÕıÔÚÉ¨Ãè¿ÉÒÆ¶¯Çı¶¯Æ÷...
+echo æ­£åœ¨æ‰«æå¯ç§»åŠ¨é©±åŠ¨å™¨...
 echo ------------------------------
 set count=0
 for /f "skip=1 tokens=1,2" %%a in ('wmic logicaldisk get caption^,drivetype 2^>nul') do (
     if "%%b"=="2" (
         set /a count+=1
         set "drive[!count!]=%%a"
-        echo [!count!] Çı¶¯Æ÷ %%a
+        echo [!count!] é©±åŠ¨å™¨ %%a
     )
 )
 
 if %count%==0 (
-    echo Î´ÕÒµ½¿ÉÒÆ¶¯Çı¶¯Æ÷£¡
+    echo æœªæ‰¾åˆ°å¯ç§»åŠ¨é©±åŠ¨å™¨ï¼
     pause
     exit /b
 )
 
 :select_drive
-set /p "drive_num=ÇëÑ¡ÔñÒª¸ñÊ½»¯µÄÇı¶¯Æ÷ºÅ: "
+set /p "drive_num=è¯·é€‰æ‹©è¦æ ¼å¼åŒ–çš„é©±åŠ¨å™¨å·: "
 if not defined drive[%drive_num%] (
-    echo ÎŞĞ§µÄÑ¡Ôñ£¡
+    echo æ— æ•ˆçš„é€‰æ‹©ï¼
     goto select_drive
 )
 
 set "selected_drive=!drive[%drive_num%]!"
-echo ¼´½«¸ñÊ½»¯Çı¶¯Æ÷ %selected_drive%
-echo ¾¯¸æ£ºÕâ½«É¾³ı¸ÃÇı¶¯Æ÷ÉÏµÄËùÓĞÊı¾İ£¡
-choice /c YN /n /m "È·ÈÏ¸ñÊ½»¯Âğ£¿(Y/N)"
+echo å³å°†æ ¼å¼åŒ–é©±åŠ¨å™¨ %selected_drive%
+echo è­¦å‘Šï¼šè¿™å°†åˆ é™¤è¯¥é©±åŠ¨å™¨ä¸Šçš„æ‰€æœ‰æ•°æ®ï¼
+choice /c YN /n /m "ç¡®è®¤æ ¼å¼åŒ–å—ï¼Ÿ(Y/N)"
 
 if %errorlevel% neq 1 (
     exit /b
@@ -81,32 +81,32 @@ set "volume_label="
 :format_menu
 cls
 echo ==============================
-echo        ¸ñÊ½»¯²ÎÊıÉèÖÃ
+echo        æ ¼å¼åŒ–å‚æ•°è®¾ç½®
 echo ==============================
-echo [µ±Ç°ÉèÖÃ]
-echo ÎÄ¼şÏµÍ³  : %fs_type%
-echo ·ÖÅäµ¥Ôª  : %unit_size%
-echo ¸ñÊ½»¯ÀàĞÍ: %quick:quick=¿ìËÙ%
-echo ¾í±êÃû³Æ  : %volume_label%
+echo [å½“å‰è®¾ç½®]
+echo æ–‡ä»¶ç³»ç»Ÿ  : %fs_type%
+echo åˆ†é…å•å…ƒ  : %unit_size%
+echo æ ¼å¼åŒ–ç±»å‹: %quick:quick=å¿«é€Ÿ%
+echo å·æ ‡åç§°  : %volume_label%
 echo ------------------------------
-echo 1. Ñ¡ÔñÎÄ¼şÏµÍ³
-echo 2. ÉèÖÃ·ÖÅäµ¥Ôª´óĞ¡
-echo 3. ÇĞ»»¸ñÊ½»¯ÀàĞÍ
-echo 4. ÉèÖÃ¾í±êÃû³Æ
-echo 5. ¿ªÊ¼¸ñÊ½»¯
-echo 0. ·µ»ØÖ÷²Ëµ¥
+echo 1. é€‰æ‹©æ–‡ä»¶ç³»ç»Ÿ
+echo 2. è®¾ç½®åˆ†é…å•å…ƒå¤§å°
+echo 3. åˆ‡æ¢æ ¼å¼åŒ–ç±»å‹
+echo 4. è®¾ç½®å·æ ‡åç§°
+echo 5. å¼€å§‹æ ¼å¼åŒ–
+echo 0. è¿”å›ä¸»èœå•
 echo ==============================
 
-choice /c 123450 /n /m "ÇëÑ¡ÔñÉèÖÃÏî: "
+choice /c 123450 /n /m "è¯·é€‰æ‹©è®¾ç½®é¡¹: "
 goto format_option_%errorlevel%
 
 :format_option_1
 cls
-echo ÇëÑ¡ÔñÎÄ¼şÏµÍ³£º
-echo 1. NTFS£¨Ä¬ÈÏ£©
+echo è¯·é€‰æ‹©æ–‡ä»¶ç³»ç»Ÿï¼š
+echo 1. NTFSï¼ˆé»˜è®¤ï¼‰
 echo 2. FAT32
 echo 3. exFAT
-choice /c 123 /n /m "Ñ¡Ôñ: "
+choice /c 123 /n /m "é€‰æ‹©: "
 if %errorlevel%==1 set fs_type=NTFS
 if %errorlevel%==2 set fs_type=FAT32
 if %errorlevel%==3 set fs_type=exFAT
@@ -114,11 +114,11 @@ goto format_menu
 
 :format_option_2
 cls
-echo ·ÖÅäµ¥Ôª´óĞ¡Ê¾Àı£º
-echo NTFS£º512/1024/2048/4096
-echo FAT32£º4096/8192/16384
-echo exFAT£º4096/8192/1048576
-set /p "unit_size=ÇëÊäÈë´óĞ¡£¨»Ø³µÊ¹ÓÃÄ¬ÈÏ£©£º"
+echo åˆ†é…å•å…ƒå¤§å°ç¤ºä¾‹ï¼š
+echo NTFSï¼š512/1024/2048/4096
+echo FAT32ï¼š4096/8192/16384
+echo exFATï¼š4096/8192/1048576
+set /p "unit_size=è¯·è¾“å…¥å¤§å°ï¼ˆå›è½¦ä½¿ç”¨é»˜è®¤ï¼‰ï¼š"
 if defined unit_size (
     set "unit_param=unit=!unit_size!"
 ) else (
@@ -128,17 +128,17 @@ goto format_menu
 
 :format_option_3
 cls
-choice /c YN /n /m "ÇĞ»»¸ñÊ½»¯ÀàĞÍ£ºµ±Ç°Îª%quick:quick=¿ìËÙ%£¨Y=¿ìËÙ/N=ÍêÕû£©"
+choice /c YN /n /m "åˆ‡æ¢æ ¼å¼åŒ–ç±»å‹ï¼šå½“å‰ä¸º%quick:quick=å¿«é€Ÿ%ï¼ˆY=å¿«é€Ÿ/N=å®Œæ•´ï¼‰"
 if %errorlevel%==1 (set "quick=quick") else (set "quick=")
 goto format_menu
 
 :format_option_4
 cls
-set /p "volume_label=ÇëÊäÈë¾í±ê£¨»Ø³µÌø¹ı£¬×î¶à32×Ö·û£©£º"
+set /p "volume_label=è¯·è¾“å…¥å·æ ‡ï¼ˆå›è½¦è·³è¿‡ï¼Œæœ€å¤š32å­—ç¬¦ï¼‰ï¼š"
 goto format_menu
 
 :format_option_5
-echo ÕıÔÚ´´½¨¸ñÊ½»¯½Å±¾...
+echo æ­£åœ¨åˆ›å»ºæ ¼å¼åŒ–è„šæœ¬...
 (
 echo select volume !selected_drive:~0,1!
 echo clean
@@ -151,17 +151,17 @@ if defined volume_label (
     echo label=!volume_label! >> format_script.txt
 )
 
-echo ÕıÔÚ¸ñÊ½»¯...£¨¿ÉÄÜĞèÒª¼¸·ÖÖÓ£©
+echo æ­£åœ¨æ ¼å¼åŒ–...ï¼ˆå¯èƒ½éœ€è¦å‡ åˆ†é’Ÿï¼‰
 diskpart /s format_script.txt >nul
 del format_script.txt
 
-echo ¸ñÊ½»¯Íê³É£¡
+echo æ ¼å¼åŒ–å®Œæˆï¼
 echo ------------------------------
-echo ×îÖÕ¸ñÊ½»¯²ÎÊı£º
-echo ÎÄ¼şÏµÍ³£º!fs_type!
-echo ·ÖÅäµ¥Ôª£º!unit_size!
-echo ¸ñÊ½»¯ÀàĞÍ£º!quick:quick=¿ìËÙ!
-echo ¾í±êÃû³Æ£º!volume_label!
+echo æœ€ç»ˆæ ¼å¼åŒ–å‚æ•°ï¼š
+echo æ–‡ä»¶ç³»ç»Ÿï¼š!fs_type!
+echo åˆ†é…å•å…ƒï¼š!unit_size!
+echo æ ¼å¼åŒ–ç±»å‹ï¼š!quick:quick=å¿«é€Ÿ!
+echo å·æ ‡åç§°ï¼š!volume_label!
 pause
 exit /b
 
@@ -169,11 +169,11 @@ exit /b
 goto main_menu
 
 :update_check
-echo ÕıÔÚ¼ì²é¸üĞÂ...
+echo æ­£åœ¨æ£€æŸ¥æ›´æ–°...
 powershell -Command "(New-Object Net.WebClient).DownloadFile('%version_url%', 'temp_version.txt')" 2>nul
 
 if not exist "temp_version.txt" (
-    echo ÎŞ·¨»ñÈ¡°æ±¾ĞÅÏ¢
+    echo æ— æ³•è·å–ç‰ˆæœ¬ä¿¡æ¯
     goto :update_fail
 )
 
@@ -181,32 +181,32 @@ set /p new_version=<temp_version.txt
 del temp_version.txt
 
 if "%new_version%" gtr "%version%" (
-    echo ·¢ÏÖĞÂ°æ±¾ v%new_version%
-    choice /c YN /n /m "ÊÇ·ñÒª¸üĞÂ£¿(Y/N)"
+    echo å‘ç°æ–°ç‰ˆæœ¬ v%new_version%
+    choice /c YN /n /m "æ˜¯å¦è¦æ›´æ–°ï¼Ÿ(Y/N)"
     if %errorlevel% neq 1 goto :update_fail
     call :perform_update
 ) else (
-    echo ÒÑ¾­ÊÇ×îĞÂ°æ±¾
+    echo å·²ç»æ˜¯æœ€æ–°ç‰ˆæœ¬
 )
 pause
 exit /b
 
 :perform_update
-echo ÕıÔÚÏÂÔØĞÂ°æ±¾...
+echo æ­£åœ¨ä¸‹è½½æ–°ç‰ˆæœ¬...
 powershell -Command "(New-Object Net.WebClient).DownloadFile('%update_url%', 'USB_Formatter_new.bat')" 2>nul
 
 if not exist "USB_Formatter_new.bat" (
-    echo ¸üĞÂÊ§°Ü
+    echo æ›´æ–°å¤±è´¥
     goto :update_fail
 )
 
-echo ÕıÔÚÓ¦ÓÃ¸üĞÂ...
+echo æ­£åœ¨åº”ç”¨æ›´æ–°...
 move /Y "USB_Formatter_new.bat" "%~nx0" >nul
-echo ¸üĞÂ³É¹¦£¬ÖØĞÂÆô¶¯³ÌĞòÖĞ...
+echo æ›´æ–°æˆåŠŸï¼Œé‡æ–°å¯åŠ¨ç¨‹åºä¸­...
 start "" "%~nx0"
 exit
 
 :update_fail
-echo ×Ô¶¯¸üĞÂÊ§°Ü£¬Çë¼ì²éÍøÂçÁ¬½Ó
+echo è‡ªåŠ¨æ›´æ–°å¤±è´¥ï¼Œè¯·æ£€æŸ¥ç½‘ç»œè¿æ¥
 pause
 exit /b
